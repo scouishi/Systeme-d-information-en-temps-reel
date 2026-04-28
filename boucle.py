@@ -16,19 +16,16 @@ def boucle():
         mes_temps.append((fin - debut) * 1000)
 
     mini = np.min(mes_temps)
-    maxi = np.max(mes_temps)
+    wcet = np.max(mes_temps)
     q1 = np.percentile(mes_temps, 25)
     q2 = np.median(mes_temps) 
     q3 = np.percentile(mes_temps, 75)
-
-    wcet = maxi * 1.10
 
     print(f"Tests: {n_tests}")
     print(f"Min: {mini:.3f} ms")
     print(f"Q1:  {q1:.3f} ms")
     print(f"Q2:  {q2:.3f} ms")
     print(f"Q3:  {q3:.3f} ms")
-    print(f"Max: {maxi:.3f} ms")
     print(f"WCET (C1): {wcet:.3f} ms")
 
     return wcet
