@@ -33,8 +33,20 @@ U = 72.78% < 100% So the task is schedulable.
 
 4. COMPLEXITY
 If we had kept the exhaustive tree-search approach to find the absolute perfect minimum waiting time, the algorithm would have to evaluate every permutation. fro N jobs the complexity fo 29 jobs would have been 29! = 8.8*10^30 (impossible for my computer)
-Thats why using the GEDF we reduce drasticly the complexity wich is now dropped to O(N^2*log(N)) wch ca be done in milliseconds (O(N) to filters the available jobs et O(N^2log(n) to sort them by deadlines)
+Thats why using the Greedy EDF we reduce drasticly the complexity wich is now dropped to O(N^2*log(N)) wch ca be done in milliseconds (O(N) to filters the available jobs et O(N^2log(n) to sort them by deadlines)
 
+5. SCHEDULABILITY ANALYSIS & RESPONSE TIMES
+The system is verified by ensuring the Response Time (R = Finish_time - Arrival_time) is <= Deadline for every job.
+
+With a total waiting time of 106.74 ms in strict mode, the execution trace confirms that:
+
+- High-priority tasks (t1, t2) consistently meet their 10ms deadlines.
+- Medium-priority tasks (t3, t4, t5, t6) are interleaved effectively.
+- The low-priority task (t7) finishes well before its 80ms deadline.
+
+The CPU successfully reaches idle states between job bursts, maximizing energy efficiency or background processing availability.
 
 CONCLUSION
+This project demonstrates that the task set is fully schedulable with a CPU load of 72.8%. By using a hybrid C/Python approach and a Greedy EDF algorithm, we avoided combinatorial explosion and produced an optimized non-preemptive schedule. The comparison between modes shows that a strict EDF policy provides the best overall waiting time (106.74 ms) for this specific workload.
 
+Repository Link : https://github.com/scouishi/Systeme-d-information-en-temps-reel
