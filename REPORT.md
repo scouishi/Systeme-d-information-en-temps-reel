@@ -9,23 +9,32 @@ Here are the files you'll find in my repositorie :
 
 - boucle.py : It compile tache_1.c and execute it a large aount of time (1000 iterations) and it measure the execution time and calculate the World Case Execution Time (WCET). It returns the WCET.
 
-- 
+- ordonnanceur.py : It calculate the CPU load, the Hyperperiod and genereate the list of jobs instances required during that period. It returns a list of 29 jobs instance with their data
+
+-  algo.py : Implements the scheduling logic to ensure any deadlines aren't missed. It contains the strict mode and the "error" mode (with t5 which can be late). It returns the final execution trace and total accumulated waiting time (also compare the two modes)
+
+To test the codes, you just need to run : python3 algo.py (ecerything is executed from there).
 
 
-3. SCHEDULABILITY
+2. SCHEDULABILITY
+Before scheduling, we need to prove that the processor is capable of handling the task set. The total CPU utilization (U) is the sum of the execution time to period ratios (C_i/T_i) for all tasks.
+
+We use the WCET calculated in task_1.c (WCET = 0.903ms) 
+
+U = 0.903/10 + 3/10 + 2/20 + 2/20 + 2/40 + 2/40 + 3/80
+U = 0.7278
+U = 72.78% < 100% So the task is schedulable.
+
+3. ASSUMPTIONS
+- The Hyperperiod: To guarantee the system will never miss a deadline indefinitely, we only need to simulate the schedule over one Hyperperiod. This is the Least Common Multiple (LCM) of all periods. LCM(10, 20, 40, 80) = 80 ms. The exact pattern of these 80 ms will repeat forever.
+
+- Optimization Methods: We use a Greedy Earliest Deadline First (EDF) algorithm to optimise the approach (better than Branch and Bound). It selects the available job with the closest deadline, ensuring safety while maximizing idle time quickly.
 
 
-
-5. ASSUMPTIONS
-
-
-
-7. COMPLEXITY
-
-
-
-9. RESPONSE TIMES
-
+4. COMPLEXITY
+If we had kept the exhaustive tree-search approach to find the absolute perfect minimum waiting time, the algorithm would have to evaluate every permutation. fro N jobs the complexity fo 29 jobs would have been 29! = 8.8*10^30 (impossible for my computer)
+Thats why using the GEDF we reduce drasticly the complexity wich is now dropped to O(N^2*log(N)) wch ca be done in milliseconds (O(N) to filters the available jobs et O(N^2log(n) to sort them by deadlines)
 
 
 CONCLUSION
+
