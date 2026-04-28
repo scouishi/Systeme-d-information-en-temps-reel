@@ -48,5 +48,3 @@ The CPU successfully reaches idle states between job bursts, maximizing energy e
 
 CONCLUSION
 This project demonstrates that the task set is fully schedulable with a CPU load of 72.8%. By using a hybrid C/Python approach and a Greedy EDF algorithm, we avoided combinatorial explosion and produced an optimized non-preemptive schedule. The comparison between modes shows that a strict EDF policy provides the best overall waiting time (106.74 ms) for this specific workload.
-
-Repository Link : https://github.com/scouishi/Systeme-d-information-en-temps-reel
