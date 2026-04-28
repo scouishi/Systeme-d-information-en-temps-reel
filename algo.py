@@ -83,13 +83,41 @@ def algo_t5_depasse(jobs):
 
     return planning, attente_totale
 
+def afficher_trace(planning):
+    temps_precedent = 0
+    dernier_arrivee = -1
+
+    for job, debut, fin in planning:
+        if debut > temps_precedent:
+            print(f"(CPU Idle from {temps_precedent:.2f} ms to {debut:.2f} ms)")
+
+        arrivee = job['arrivée']
+
+        if arrivee != dernier_arrivee:
+            if dernier_arrivee != -1 and arrivee < dernier_arrivee:
+                print(f"\nPending from {arrivee} ms:\n")
+            else:
+                print(f"\nArrivals at {arrivee} ms:\n")
+            dernier_arrivee = arrivee
+
+        reponse = fin - arrivee
+        status = "OK" if fin <= job['deadline'] else "LATE"
+
+        print(f"t{job['id_tache']}_{job['num_instance']} | Finish: {fin:.2f} ms | Response: {reponse:.2f} ms | Deadline: {job['deadline']} ms ({status})")
+
+        temps_precedent = fin
+
+    if temps_precedent < 80:
+        print(f"(CPU Idle from {temps_precedent:.2f} ms to 80.00 ms)")
+
 if __name__ == "__main__":
     jobs = init_jobs()
 
     print("\n Test no deadlines miss")
     plan1, att1 = algo_sans_depasse(jobs)
     if plan1:
-        print(f"Attente totale : {att1:.2f} ms")
+        afficher_trace(plan1)
+        print(f"\nAttente totale : {att1:.2f} ms")
     else:
         print("Erreur")
 
@@ -99,6 +127,7 @@ if __name__ == "__main__":
         print(f"Attente totale : {att2:.2f} ms")
     else:
         print("Erreur")
+
     if att1 < att2:
         print("\n Plus long avec t5 qui dépasse")
     else:
